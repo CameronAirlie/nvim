@@ -61,14 +61,17 @@ vim.opt.expandtab = true
 vim.opt.pumblend = 10
 vim.opt.winblend = 10
 
+local plugins
+if vim.g.vscode then
+  plugins = "plugins_vscode"
+else
+  plugins = "plugins_nvim"
+end
 
 require("lazy").setup({
   spec = {
-    {
-      import = "plugins",
-    },
+    { import = plugins, },
   },
-
   checker = { enabled = true, notify = false },
   defaults = {
     lazy = true
@@ -81,8 +84,12 @@ require("lazy").setup({
   }
 })
 
-
-
 require("mappings")
-require("lspsetup")
-require("autocommands")
+
+
+if vim.g.vscode then
+  require("vscode_status")
+else
+  require("lspsetup")
+  require("autocommands")
+end

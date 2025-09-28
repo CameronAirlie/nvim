@@ -11,6 +11,7 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   require('blink.cmp').get_lsp_capabilities()
 )
 
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'html', 'cssls', 'jsonls', },
