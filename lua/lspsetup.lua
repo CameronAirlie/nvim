@@ -22,6 +22,7 @@ require('mason-lspconfig').setup({
   },
 })
 
+
 -- This is where you enable features that only work
 -- if there is a language server active in the file
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -43,3 +44,37 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'ga', '<cmd>lua require("tiny-code-action").code_action()<cr>', opts)
   end,
 })
+
+-- ~/.config/nvim/lua/config/clangd.lua
+
+vim.lsp.config("clangd", {
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+  },
+  root_markers = {
+    ".clangd",
+    "compile_commands.json",
+    "compile_flags.txt",
+    ".git",
+  },
+  filetypes = {
+    "c",
+    "cpp",
+    "objc",
+    "objcpp",
+    "cuda",
+  },
+})
+
+vim.lsp.enable("clangd")
+
+vim.filetype.add(
+  {
+    extension = {
+      rml = "html",
+      rcss = "css",
+    },
+  }
+)

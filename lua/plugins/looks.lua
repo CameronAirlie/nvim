@@ -15,7 +15,7 @@ return {
             }
           }
         },
-        transparent = vim.fn.has('macunix'),
+        transparent = false,
         overrides = function(colors)
           local theme = colors.theme
           return {
