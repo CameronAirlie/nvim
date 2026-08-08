@@ -52,6 +52,9 @@ vim.lsp.config("clangd", {
     "clangd",
     "--background-index",
     "--clang-tidy",
+    -- CMake projects commonly keep their compilation database out of tree.
+    -- The path is relative to clangd's project working directory.
+    "--compile-commands-dir=out",
   },
   root_markers = {
     ".clangd",
