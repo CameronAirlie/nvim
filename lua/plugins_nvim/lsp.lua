@@ -103,6 +103,9 @@ return {
 
    {
      'neovim/nvim-lspconfig',
+     -- Only provides server configs (lsp/*.lua) for vim.lsp.enable(), which
+     -- must be on the runtimepath before any server starts
+     lazy = false,
      dependencies = { 'saghen/blink.cmp' },
      config = function(_, opts)
      end

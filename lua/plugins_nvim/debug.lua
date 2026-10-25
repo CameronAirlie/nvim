@@ -141,7 +141,9 @@ return {
       -- Keep the UI open after short-lived programs so their output and exit
       -- status do not disappear before they can be inspected.
       dap.listeners.before.event_terminated.dapui_config = function(_, body)
-        vim.notify("Debug session terminated" .. (body.restart and " (restarting)" or ""), vim.log.levels.INFO, { title = "DAP" })
+        -- The terminated event's body is optional (gdb omits it)
+        local restarting = body and body.restart
+        vim.notify("Debug session terminated" .. (restarting and " (restarting)" or ""), vim.log.levels.INFO, { title = "DAP" })
       end
       dap.listeners.before.event_exited.dapui_config = function(_, body)
         vim.notify("Program exited with code " .. tostring(body.exitCode), vim.log.levels.INFO, { title = "DAP" })
