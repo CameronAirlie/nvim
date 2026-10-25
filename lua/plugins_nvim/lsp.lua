@@ -187,6 +187,7 @@ return {
        local parsers = {
          "bash",
          "c",
+         "cmake",
          "cpp",
          "css",
          "dockerfile",

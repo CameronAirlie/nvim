@@ -47,6 +47,7 @@ return {
     opts = {
       preset = "modern",
       spec = {
+        { "<leader>c", group = "cmake" },
         { "<leader>d", group = "debug" },
         { "<leader>e", group = "explore" },
         { "<leader>f", group = "find" },

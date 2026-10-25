@@ -3,7 +3,7 @@
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'html', 'cssls', 'jsonls', },
+  ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'html', 'cssls', 'jsonls', 'neocmake', },
   -- mason-lspconfig v2 calls vim.lsp.enable() for every installed server.
   -- typescript-tools.nvim already provides the TypeScript server, so keep
   -- ts_ls from attaching a second one to the same buffers.
@@ -47,9 +47,9 @@ vim.lsp.config("clangd", {
     "clangd",
     "--background-index",
     "--clang-tidy",
-    -- CMake projects commonly keep their compilation database out of tree.
-    -- The path is relative to clangd's project working directory.
-    "--compile-commands-dir=out",
+    -- No --compile-commands-dir: cmake-tools.nvim symlinks the active
+    -- preset's compile_commands.json into the project root, which clangd
+    -- finds by searching the file's parent directories.
   },
   root_markers = {
     ".clangd",
