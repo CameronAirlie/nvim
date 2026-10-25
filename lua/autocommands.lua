@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- make sure there is at least one client with formatting capabilities
-    if client.supports_method('textDocument/formatting') then
+    if client:supports_method('textDocument/formatting') then
       buffer_autoformat(event.buf)
     end
   end
@@ -34,22 +34,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
   group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
   callback = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
+    vim.hl.on_yank({ higroup = "IncSearch", timeout = 200 })
   end,
 })
-
--- set filetype xml for extension .axaml for Avalonia
-vim.api.nvim_create_autocmd('BufRead', {
-  desc = 'set filetype xml for extension .axaml',
-  pattern = { '*.axaml', '*.xaml' },
-  callback = function()
-    vim.bo.filetype = 'xml'
-  end,
-})
--- vim.api.nvim_create_autocmd("BufEnter", {
---   desc = "Syntax highlighting when leaving insert mode",
---   group = vim.api.nvim_create_augroup("enable_buf_hl", { clear = true }),
---   callback = function()
---     vim.cmd([[TSBufEnable highlight]])
---   end,
--- })

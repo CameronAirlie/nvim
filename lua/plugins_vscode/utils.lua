@@ -6,13 +6,7 @@ return {
   },
 
 
-  -- Commenting
-  {
-    "numToStr/Comment.nvim",
-    event = "BufEnter",
-    dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
-  },
-
+  -- Commenting (extends the built-in gc operator)
   {
     "folke/ts-comments.nvim",
     opts = {},

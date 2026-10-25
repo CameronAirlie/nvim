@@ -109,14 +109,13 @@ return {
      end
    },
 
-   { "onsails/lspkind.nvim" },
    { 'williamboman/mason.nvim' },
    { 'williamboman/mason-lspconfig.nvim' },
    {
      "pmizio/typescript-tools.nvim",
      dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
      opts = {},
-     event = "BufEnter",
+     ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
    },
 
    {
@@ -131,12 +130,6 @@ return {
          enabled = false
        }
      },
-   },
-   {
-     "onsails/lspkind.nvim",
-     config = function()
-       require("lspkind").init({})
-     end,
    },
 
    {
@@ -168,25 +161,15 @@ return {
 
        require('nvim-treesitter').install(parsers)
 
+       -- Parser names don't always match filetypes (tsx -> typescriptreact,
+       -- bash -> sh), so start highlighting for any buffer whose filetype
+       -- has an installed parser instead of matching on parser names.
        vim.api.nvim_create_autocmd('FileType', {
-         pattern = vim.list_extend(vim.deepcopy(parsers), { "sh" }),
-         callback = function()
-           vim.treesitter.start()
+         callback = function(args)
+           pcall(vim.treesitter.start, args.buf)
          end,
        })
      end,
-   },
-
-   {
-     "luckasRanarison/tailwind-tools.nvim",
-     name = "tailwind-tools",
-     build = ":UpdateRemotePlugins",
-     dependencies = {
-       "nvim-treesitter/nvim-treesitter",
-       "nvim-telescope/telescope.nvim", -- optional
-       "neovim/nvim-lspconfig",         -- optional
-     },
-     opts = {}                          -- your configuration
    },
 
    {
@@ -217,11 +200,5 @@ return {
      config = function()
        require('tiny-code-action').setup()
      end
-   },
-
-
-   {
-     "dgagn/diagflow.nvim",
-     event = "BufRead",
    },
 }

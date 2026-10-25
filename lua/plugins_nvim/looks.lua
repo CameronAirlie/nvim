@@ -60,19 +60,6 @@ return {
 
   -- File icons for file explorer
   "nvim-tree/nvim-web-devicons",
-  {
-    "rachartier/tiny-devicons-auto-colors.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "rebelot/kanagawa.nvim"
-    },
-    event = "VeryLazy",
-    -- config = function()
-    --   require("tiny-devicons-auto-colors").setup({
-    --     colors = require("kanagawa.colors").setup().palette,
-    --   })
-    -- end,
-  },
 
   {
     'rcarriga/nvim-notify',
@@ -83,22 +70,6 @@ return {
   },
 
   -- Indentation guides
-  -- "echasnovski/mini.indentscope",
-  {
-    "nvimdev/indentmini.nvim",
-    event = "BufEnter",
-    opts = {},
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "rebelot/kanagawa.nvim",
-    },
-    config = function()
-      require("indentmini").setup();
-      local colors = require("kanagawa.colors").setup().palette
-      vim.cmd.highlight(string.format("IndentLine guifg=%s", colors.sumiInk5))
-      vim.cmd.highlight(string.format("IndentLineCurrent guifg=%s", colors.sumiInk6))
-    end
-  },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",

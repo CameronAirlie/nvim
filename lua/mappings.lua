@@ -11,8 +11,14 @@ vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { noremap = true })
 
--- Clears highlighting after search
-vim.keymap.set("n", "<CR>", ":noh<CR>", { silent = true, noremap = true })
+-- Clears highlighting after search (keeps <CR> working in quickfix and
+-- other special buffers, where it opens the entry under the cursor)
+vim.keymap.set("n", "<CR>", function()
+  if vim.bo.buftype ~= "" then
+    return "<CR>"
+  end
+  return "<cmd>nohlsearch<CR>"
+end, { expr = true, silent = true })
 
 -- Center view after search
 vim.keymap.set("n", "n", "nzz")

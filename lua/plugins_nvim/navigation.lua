@@ -3,11 +3,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     opts = {
-      defautls = {
-        file_ignore_patterns = { ".git/", "node_modules/" },
-        file_includes = {
-          ".env",
-        },
+      defaults = {
+        -- Lua patterns, so the dot must be escaped
+        file_ignore_patterns = { "%.git/", "node_modules/" },
+      },
+      pickers = {
+        -- Include dotfiles such as .env
+        find_files = { hidden = true },
       },
     },
     keys = {
@@ -45,6 +47,22 @@ return {
     dependencies = {
       "SmiteshP/nvim-navic",
       "MunifTanjim/nui.nvim",
+    },
+    -- Attach manually: navbuddy's own auto_attach calls an API deprecated in
+    -- Neovim 0.12 when it loads after a client is already running.
+    init = function()
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client and client.server_capabilities.documentSymbolProvider then
+            require("nvim-navbuddy").attach(client, args.buf)
+          end
+        end,
+      })
+    end,
+    opts = {},
+    keys = {
+      { "<leader>es", "<cmd>Navbuddy<cr>", desc = "Navbuddy symbols" },
     },
   },
 }
