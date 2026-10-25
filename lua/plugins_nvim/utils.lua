@@ -1,8 +1,10 @@
 return {
   -- Surround Words/Text with quotes, brackets etc.
   {
-    "tpope/vim-surround",
-    event = "BufEnter",
+    "kylechui/nvim-surround",
+    version = "^3.0.0",
+    event = "VeryLazy",
+    opts = {},
   },
 
 
@@ -36,5 +38,21 @@ return {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = true
+  },
+
+  -- Keymap hints
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      preset = "modern",
+      spec = {
+        { "<leader>d", group = "debug" },
+        { "<leader>e", group = "explore" },
+        { "<leader>f", group = "find" },
+        { "<leader>g", group = "lsp" },
+        { "<leader>h", group = "git hunks" },
+      },
+    },
   },
 }

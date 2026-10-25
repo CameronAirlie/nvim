@@ -2,10 +2,13 @@ return {
 -- Auto Completion
  {
    'saghen/blink.cmp',
+   -- Must load before any language server starts so its completion
+   -- capabilities are registered (blink lazy-loads its internals itself)
+   lazy = false,
    -- optional: provides snippets for the snippet source
    dependencies = {
      'rafamadriz/friendly-snippets',
-     'giuxtaposition/blink-cmp-copilot',
+     'fang2hou/blink-copilot',
    },
 
    -- use a release tag to download pre-built binaries
@@ -81,7 +84,7 @@ return {
        providers = {
          copilot = {
            name = "copilot",
-           module = "blink-cmp-copilot",
+           module = "blink-copilot",
            score_offset = 100,
            async = true,
          },
@@ -99,10 +102,6 @@ return {
  },
 
    {
-     "giuxtaposition/blink-cmp-copilot",
-   },
-
-   {
      'neovim/nvim-lspconfig',
      dependencies = { 'saghen/blink.cmp' },
      config = function(_, opts)
@@ -116,6 +115,50 @@ return {
      dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
      opts = {},
      ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+   },
+
+   -- Formatting
+   {
+     "stevearc/conform.nvim",
+     event = "BufWritePre",
+     cmd = "ConformInfo",
+     keys = {
+       {
+         "<F3>",
+         function() require("conform").format({ async = true }) end,
+         mode = { "n", "x" },
+         desc = "Format buffer",
+       },
+     },
+     ---@module "conform"
+     ---@type conform.setupOpts
+     opts = {
+       -- Formatters that aren't installed are skipped. When none of a
+       -- filetype's formatters are available, LSP formatting is used instead.
+       formatters_by_ft = {
+         lua = { "stylua" },
+         go = { "goimports", "gofmt", stop_after_first = true },
+         python = { "ruff_format" },
+         c = { "clang-format" },
+         cpp = { "clang-format" },
+         cs = { "csharpier" },
+         javascript = { "prettierd", "prettier", stop_after_first = true },
+         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+         typescript = { "prettierd", "prettier", stop_after_first = true },
+         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+         css = { "prettierd", "prettier", stop_after_first = true },
+         scss = { "prettierd", "prettier", stop_after_first = true },
+         html = { "prettierd", "prettier", stop_after_first = true },
+         json = { "prettierd", "prettier", stop_after_first = true },
+         yaml = { "prettierd", "prettier", stop_after_first = true },
+       },
+       default_format_opts = {
+         lsp_format = "fallback",
+       },
+       format_on_save = {
+         timeout_ms = 10000,
+       },
+     },
    },
 
    {

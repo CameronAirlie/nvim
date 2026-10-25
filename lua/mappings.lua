@@ -1,5 +1,6 @@
--- Unfocus terminal with <Esc>
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+-- Unfocus terminal with a double <Esc>, so a single <Esc> still reaches
+-- programs running inside it (lazygit, fzf, etc.)
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
 
 -- Center view after jumping
 vim.keymap.set("n", "<C-d>", "<C-d>zz")

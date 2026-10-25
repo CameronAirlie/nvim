@@ -14,12 +14,12 @@ return {
       require("gitsigns").setup({})
     end,
     keys = {
-      { "<leader>hs", "<cmd>lua require'gitsigns'.stage_hunk()<CR>" },
-      { "<leader>hS", "<cmd>lua require'gitsigns'.stage_buffer()<CR>" },
-      { "<leader>hu", "<cmd>lua require'gitsigns'.undo_stage_hunk()<CR>" },
-      { "<leader>hr", "<cmd>lua require'gitsigns'.reset_hunk()<CR>" },
-      { "<leader>hR", "<cmd>lua require'gitsigns'.reset_buffer()<CR>" },
-      { "<leader>hp", "<cmd>lua require'gitsigns'.preview_hunk()<CR>" },
+      { "<leader>hs", "<cmd>lua require'gitsigns'.stage_hunk()<CR>", desc = "Stage hunk" },
+      { "<leader>hS", "<cmd>lua require'gitsigns'.stage_buffer()<CR>", desc = "Stage buffer" },
+      { "<leader>hu", "<cmd>lua require'gitsigns'.undo_stage_hunk()<CR>", desc = "Undo stage hunk" },
+      { "<leader>hr", "<cmd>lua require'gitsigns'.reset_hunk()<CR>", desc = "Reset hunk" },
+      { "<leader>hR", "<cmd>lua require'gitsigns'.reset_buffer()<CR>", desc = "Reset buffer" },
+      { "<leader>hp", "<cmd>lua require'gitsigns'.preview_hunk()<CR>", desc = "Preview hunk" },
       -- Fall back to the built-in ]c/[c when in diff mode
       {
         "]c",
@@ -27,6 +27,7 @@ return {
           if vim.wo.diff then return vim.cmd.normal({ "]c", bang = true }) end
           require("gitsigns").nav_hunk("next")
         end,
+        desc = "Next hunk",
       },
       {
         "[c",
@@ -34,6 +35,7 @@ return {
           if vim.wo.diff then return vim.cmd.normal({ "[c", bang = true }) end
           require("gitsigns").nav_hunk("prev")
         end,
+        desc = "Previous hunk",
       },
     },
   },

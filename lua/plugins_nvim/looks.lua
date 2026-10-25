@@ -61,14 +61,6 @@ return {
   -- File icons for file explorer
   "nvim-tree/nvim-web-devicons",
 
-  {
-    'rcarriga/nvim-notify',
-    event = "VeryLazy",
-    config = function()
-      vim.notify = require("notify")
-    end,
-  },
-
   -- Indentation guides
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -99,29 +91,24 @@ return {
       },
       exclude = {
         filetypes = {
-          "dashboard"
+          "snacks_dashboard"
         }
       }
     }
   },
 
-  -- LSP status
+  -- Dashboard, notifications and LSP progress
   {
-    "j-hui/fidget.nvim",
-    event = "BufEnter",
+    "folke/snacks.nvim",
+    lazy = false,
+    priority = 1000,
+    ---@type snacks.Config
     opts = {
-      -- options
-    },
-  },
-
-  {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {
-        theme = 'hyper',
-        config = {
-          header = {
+      notifier = { enabled = true },
+      dashboard = {
+        enabled = true,
+        preset = {
+          header = table.concat({
             [[                                                ]],
             [[                                          _.oo. ]],
             [[                  _.u[[/;:,.         .odMMMMMM' ]],
@@ -139,13 +126,32 @@ return {
             [[ YMMMUP^                                        ]],
             [[  ^^                                            ]],
             [[                                                ]],
-          },
-          project = { enable = false },
-          mru = { enable = true, limit = 8 }
-        }
-      }
+          }, "\n"),
+        },
+        sections = {
+          { section = "header" },
+          { section = "keys", gap = 1, padding = 1 },
+          { icon = " ", title = "Recent Files", section = "recent_files", limit = 8, indent = 2, padding = 1 },
+          { section = "startup" },
+        },
+      },
+    },
+    init = function()
+      -- Show LSP progress as a single updating notification
+      local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+      vim.api.nvim_create_autocmd("LspProgress", {
+        callback = function(ev)
+          local value = ev.data.params.value
+          vim.notify(vim.lsp.status(), vim.log.levels.INFO, {
+            id = "lsp_progress",
+            title = "LSP Progress",
+            opts = function(notif)
+              notif.icon = value.kind == "end" and " "
+                  or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+            end,
+          })
+        end,
+      })
     end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } }
-  }
-
+  },
 }

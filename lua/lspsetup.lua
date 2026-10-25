@@ -27,12 +27,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'gD', vim.lsp.buf.declaration, 'LSP: Go to declaration')
     map('n', 'gi', vim.lsp.buf.implementation, 'LSP: Go to implementation')
     map('n', 'go', vim.lsp.buf.type_definition, 'LSP: Go to type definition')
-    map('n', 'gr', vim.lsp.buf.references, 'LSP: References')
     map('n', 'gl', vim.diagnostic.open_float, 'LSP: Line diagnostics')
     map('n', '<leader>gs', vim.lsp.buf.signature_help, 'LSP: Signature help')
     map('n', '<F2>', vim.lsp.buf.rename, 'LSP: Rename')
-    map({ 'n', 'x' }, '<F3>', function() vim.lsp.buf.format({ async = true }) end, 'LSP: Format')
-    map('n', 'ga', function() require('tiny-code-action').code_action() end, 'LSP: Code action')
+
+    -- References use Neovim's built-in grr (alongside grn rename, gri
+    -- implementation, grt type definition, gO document symbols). gra is
+    -- remapped so it uses the same code action UI as ga.
+    local code_action = function() require('tiny-code-action').code_action() end
+    map('n', 'ga', code_action, 'LSP: Code action')
+    map('n', 'gra', code_action, 'LSP: Code action')
   end,
 })
 

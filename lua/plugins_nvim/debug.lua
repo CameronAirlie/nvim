@@ -68,7 +68,8 @@ return {
       local dap = require("dap")
       local dapui = require("dapui")
 
-      dap.set_log_level("TRACE")
+      -- Raise to "TRACE" temporarily when debugging adapter issues
+      dap.set_log_level("WARN")
 
       dapui.setup({
         controls = { enabled = true },

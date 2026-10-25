@@ -37,7 +37,7 @@ return {
       },
     },
     keys = {
-      { "<leader>ef", "<cmd>Oil<cr>" },
+      { "<leader>ef", "<cmd>Oil<cr>", desc = "Oil file browser" },
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },

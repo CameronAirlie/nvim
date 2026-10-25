@@ -1,8 +1,10 @@
 return {
   -- Surround Words/Text with quotes, brackets etc.
   {
-    "tpope/vim-surround",
-    event = "BufEnter",
+    "kylechui/nvim-surround",
+    version = "^3.0.0",
+    event = "VeryLazy",
+    opts = {},
   },
 
 
