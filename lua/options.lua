@@ -31,12 +31,15 @@ vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 vim.opt.expandtab = true
 
--- Opacity of floating windows
-vim.opt.pumblend = 10
-vim.opt.winblend = 10
+-- Floating windows are solid: blending muddies text over a transparent
+-- background. Borders are set per window rather than with 'winborder',
+-- which also frames plenary's border windows and doubles Telescope's.
+vim.opt.pumblend = 0
+vim.opt.winblend = 0
 
 vim.diagnostic.config({
   -- Inline diagnostics are drawn by tiny-inline-diagnostic.nvim
   virtual_text = false,
   update_in_insert = true,
+  float = { border = "rounded" },
 })

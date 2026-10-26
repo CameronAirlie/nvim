@@ -15,11 +15,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins
-if vim.g.vscode then
-  plugins = "plugins_vscode"
-else
-  plugins = "plugins_nvim"
-end
+-- if vim.g.vscode then
+-- plugins = "plugins_vscode"
+-- else
+plugins = "plugins_nvim"
+-- end
 
 require("lazy").setup({
   spec = {

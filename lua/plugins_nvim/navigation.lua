@@ -4,6 +4,12 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = {
       defaults = {
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        prompt_prefix = "   ",
+        selection_caret = "  ",
+        entry_prefix = "  ",
+        sorting_strategy = "ascending",
+        layout_config = { prompt_position = "top" },
         -- Lua patterns, so the dot must be escaped
         file_ignore_patterns = { "%.git/", "node_modules/" },
       },
@@ -60,7 +66,9 @@ return {
         end,
       })
     end,
-    opts = {},
+    opts = {
+      window = { border = "rounded" },
+    },
     keys = {
       { "<leader>es", "<cmd>Navbuddy<cr>", desc = "Navbuddy symbols" },
     },

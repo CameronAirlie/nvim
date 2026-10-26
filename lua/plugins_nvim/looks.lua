@@ -18,17 +18,44 @@ return {
         transparent = true,
         overrides = function(colors)
           local theme = colors.theme
+          local float = theme.ui.float
+          -- Every floating window shares one look: a solid panel a shade
+          -- darker than the editor, a quiet rounded border and an accent title
+          local panel = { fg = float.fg, bg = float.bg }
+          local border = { fg = float.fg_border, bg = float.bg }
+          local title = { fg = theme.syn.fun, bg = float.bg, bold = true }
           return {
-            NormalFloat = { bg = "none" },
-            FloatBorder = { bg = "none", fg = theme.ui.bg_p2 },
-            FloatTitle = { bg = "none" },
-            NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-            LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-            MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-            Pmenu = { fg = theme.ui.fg_dim, bg = theme.ui.bg, blend = vim.o.pumblend },
-            PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
-            PmenuSbar = { bg = theme.ui.bg_m1 },
-            PmenuThumb = { bg = theme.ui.fg_dim },
+            NormalFloat = panel,
+            FloatBorder = border,
+            FloatTitle = title,
+            FloatFooter = { fg = theme.ui.nontext, bg = float.bg },
+            NormalDark = panel,
+            LazyNormal = panel,
+            MasonNormal = panel,
+
+            -- Completion, docs and signature help: a borderless panel lifted
+            -- above the editor, with a blue selection bar
+            Pmenu = { fg = theme.ui.fg_dim, bg = theme.ui.bg_p1 },
+            PmenuSel = { fg = "NONE", bg = theme.ui.pmenu.bg_sel, bold = true },
+            PmenuSbar = { bg = theme.ui.bg_p1 },
+            PmenuThumb = { bg = theme.ui.bg_p2 },
+            BlinkCmpMenuBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+            BlinkCmpDoc = { fg = float.fg, bg = theme.ui.bg_p1 },
+            BlinkCmpDocBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+            BlinkCmpDocSeparator = { fg = theme.ui.bg_p2, bg = theme.ui.bg_p1 },
+            BlinkCmpSignatureHelp = { fg = float.fg, bg = theme.ui.bg_p1 },
+            BlinkCmpSignatureHelpBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+            BlinkCmpLabelDescription = { fg = theme.syn.comment },
+
+            TelescopeNormal = panel,
+            TelescopeBorder = border,
+            TelescopeTitle = title,
+            TelescopePromptPrefix = { fg = theme.syn.fun, bg = float.bg },
+            TelescopeSelection = { bg = theme.ui.bg_p2 },
+
+            WhichKeyNormal = panel,
+            WhichKeyBorder = border,
+            WhichKeyTitle = title,
           }
         end,
       })

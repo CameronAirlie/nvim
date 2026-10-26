@@ -56,25 +56,22 @@ return {
      completion = {
        documentation = {
          auto_show = true,
-         window = {
-           border = 'rounded',
-           winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
-           winblend = 10
-         }
+         -- Colours come from the BlinkCmp* groups set in looks.lua
+         window = { border = 'padded' },
        },
        menu = {
-         winblend = 10,
-         border = 'rounded',
-         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None"
+         border = 'padded',
+         draw = {
+           -- Icon | label + detail | kind name, with LSP labels highlighted
+           -- like code
+           columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 }, { 'kind' } },
+           treesitter = { 'lsp' },
+         },
        },
      },
      signature = {
        enabled = true,
-       window = {
-         border = 'rounded',
-         winblend = 10,
-         winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None"
-       }
+       window = { border = 'padded' },
      },
 
      -- Default list of enabled providers defined so that you can extend it

@@ -1,7 +1,7 @@
 -- blink.cmp registers its completion capabilities for every server through
 -- vim.lsp.config('*') on its own, so no capabilities setup is needed here.
 
-require('mason').setup({})
+require('mason').setup({ ui = { border = 'rounded' } })
 require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'html', 'cssls', 'jsonls', 'neocmake', },
   -- mason-lspconfig v2 calls vim.lsp.enable() for every installed server.
@@ -22,13 +22,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, lhs, rhs, { buffer = event.buf, desc = desc })
     end
 
-    map('n', 'K', vim.lsp.buf.hover, 'LSP: Hover')
+    map('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, 'LSP: Hover')
     map('n', 'gd', vim.lsp.buf.definition, 'LSP: Go to definition')
     map('n', 'gD', vim.lsp.buf.declaration, 'LSP: Go to declaration')
     map('n', 'gi', vim.lsp.buf.implementation, 'LSP: Go to implementation')
     map('n', 'go', vim.lsp.buf.type_definition, 'LSP: Go to type definition')
     map('n', 'gl', vim.diagnostic.open_float, 'LSP: Line diagnostics')
-    map('n', '<leader>gs', vim.lsp.buf.signature_help, 'LSP: Signature help')
+    map('n', '<leader>gs', function() vim.lsp.buf.signature_help({ border = 'rounded' }) end, 'LSP: Signature help')
     map('n', '<F2>', vim.lsp.buf.rename, 'LSP: Rename')
 
     -- References use Neovim's built-in grr (alongside grn rename, gri
